@@ -2,19 +2,21 @@ package com.hruparomangmail.songbookx;
 
 
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 /**
  *
  * Created by Roman Khrupa on 12.03.2016.
+ * SQlite live here .
  */
 public class DBHelper extends SQLiteOpenHelper {
     private static final int DATABASE_VERSION=2;
-    private static final String DATABASE_NAME="songBookX.dp";
+    private static final String DATABASE_NAME="songBookX.db";
 
     public DBHelper(Context context) {
-        super(context,DATABASE_NAME,null,DATABASE_VERSION);
+        super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
     @Override
@@ -29,6 +31,7 @@ public class DBHelper extends SQLiteOpenHelper {
                 + Card.KEY_CATEGORY + " TEXT) ";
 
         db.execSQL(CREATE_TABLE_EXPENSE);
+
     }
 
     @Override
@@ -36,4 +39,5 @@ public class DBHelper extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS "+Card.TABLE);
         onCreate(db);
     }
+
 }

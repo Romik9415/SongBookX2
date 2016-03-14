@@ -18,6 +18,20 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+<!--        <activity
+            android:name="com.name.SongBookX.FullscreenActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="@string/title_activity_fullscreen"
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/FullscreenTheme">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.hruparomangmail.songbookx.MainActivity" />
+        </activity>-->
+        <activity
+            android:name=".Activity_detail_full"
+            android:parentActivityName=".MainActivity">
+        </activity>
     </application>
 
 </manifest>

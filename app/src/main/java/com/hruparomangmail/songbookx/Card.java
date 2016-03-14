@@ -2,6 +2,7 @@ package com.hruparomangmail.songbookx;
 
 /**
  *Created by Roman Khrupa on 12.03.2016.
+ * All card info
  */
 public class Card {
     private int id;

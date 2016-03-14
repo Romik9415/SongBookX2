@@ -1,10 +1,17 @@
 package com.hruparomangmail.songbookx;
 
+import android.content.ClipData;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.PersistableBundle;
+import android.preference.Preference;
+import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -15,13 +22,17 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.AbsListView;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     CardRepo cardRepo= new CardRepo(this);
+    Context context=this;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,6 +46,10 @@ public class MainActivity extends AppCompatActivity
             public void onClick(View view) {
                 Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
+                Intent intent = new Intent(context, Activity_detail_full.class);
+                intent.putExtra(Activity_detail_full.EXTRA_ID, cardRepo.getRandomQuote().getId());
+                startActivity(intent);
+
             }
         });
 
@@ -46,17 +61,10 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-        cardRepo.insert(new Card("new","qwertyuio","qeqweq",Card.Category.first.name()));
 
-        List<Card> expenses = cardRepo.getCardList();
-        CardAdapter cardAdapter = new CardAdapter(expenses,this);
-        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.itemL);
-        recyclerView.setHasFixedSize(true);
-        LinearLayoutManager llm = new LinearLayoutManager(this);
-        llm.setOrientation(LinearLayoutManager.VERTICAL);
-        recyclerView.setLayoutManager(llm);
-        recyclerView.setAdapter(cardAdapter);
+        updateRecycler();
     }
+
 
     @Override
     public void onBackPressed() {
@@ -97,15 +105,30 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.addLyrics) {
-            // Handle the camera action
-        } else if (id == R.id.nav_share) {
+           SongsBeta.inSong(cardRepo);
+            updateRecycler();}
 
-        } else if (id == R.id.nav_send) {
+          else if (id == R.id.delete_all) {
+            cardRepo.deleteAll();
+            updateRecycler();
+        } /*else if (id == R.id.nav_send) {}*/
 
-        }
+
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+    public void updateRecycler(){
+        //Updater function
+        List<Card> cards = cardRepo.getCardList();
+        CardAdapter cardAdapter = new CardAdapter(cards,this);
+        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.itemL);
+        recyclerView.setHasFixedSize(true);
+        LinearLayoutManager llm = new LinearLayoutManager(this);
+        llm.setOrientation(LinearLayoutManager.VERTICAL);
+        recyclerView.setLayoutManager(llm);
+        recyclerView.setAdapter(cardAdapter);
+    }
+
 }

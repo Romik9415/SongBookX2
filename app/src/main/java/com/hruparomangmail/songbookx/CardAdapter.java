@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.List;
 
@@ -37,24 +38,25 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.CardViewHolder
         cardViewHolder.title.setText(card.getTitle());
         cardViewHolder.lyrics.setText(card.getLyrics());
         cardViewHolder.author.setText(card.getAuthor());
-        cardViewHolder.category.setText(card.getNameOfCategory());
+        //cardViewHolder.category.setText("cat");
         cardViewHolder.id.setText(String.valueOf(card.getId()));
 
-/*        cardViewHolder.card.setOnClickListener(new View.OnClickListener(){
+        cardViewHolder.card.setOnClickListener(new View.OnClickListener(){
 
             public void onClick(View v){
 
-                Intent intent = new Intent(mainContext,CardDetailActivity.class);
-                intent.putExtra(ExpenseDetailActivity.EXTRA_ID, expense.getId());
+                Intent intent = new Intent(mainContext,Activity_detail_full.class);
+                intent.putExtra(Activity_detail_full.EXTRA_ID, card.getId());
                 mainContext.startActivity(intent);
 
             }
-        });*/
+        });
 
     }
 
     @Override
     public CardViewHolder onCreateViewHolder(ViewGroup viewGroup,int i)
+            //card info
     {
         View item_view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.card_view,viewGroup,false);
         return new CardViewHolder(item_view);
@@ -68,7 +70,7 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.CardViewHolder
         protected TextView title;
         protected TextView lyrics;
         protected TextView author;
-        protected TextView category;
+        //protected TextView category;
         protected CardView card;
 
         public CardViewHolder(View v){
@@ -82,4 +84,5 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.CardViewHolder
         }
 
     }
+
 }
