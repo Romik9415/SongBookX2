@@ -47,7 +47,6 @@ public class CardRepo {
                         cursor.getString(cursor.getColumnIndex(Card.KEY_CATEGORY))
                 );
                 card.setId(cursor.getInt(cursor.getColumnIndex(Card.KEY_ID)));
-                Log.v("text",Card.KEY_ID);
                 cardList.add(card);
 
             }while (cursor.moveToNext());

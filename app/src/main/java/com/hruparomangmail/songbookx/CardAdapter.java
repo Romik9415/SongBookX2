@@ -1,12 +1,20 @@
 package com.hruparomangmail.songbookx;
 
+import android.animation.AnimatorInflater;
+import android.animation.StateListAnimator;
+import android.app.Activity;
+import android.app.ActivityOptions;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -33,21 +41,31 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.CardViewHolder
     }
 
     @Override
-    public void onBindViewHolder(CardViewHolder cardViewHolder,int i){
+    public void onBindViewHolder(final CardViewHolder cardViewHolder,int i){
         final Card card = cardList.get(i);
         cardViewHolder.title.setText(card.getTitle());
         cardViewHolder.lyrics.setText(card.getLyrics());
         cardViewHolder.author.setText(card.getAuthor());
-        //cardViewHolder.category.setText("cat");
         cardViewHolder.id.setText(String.valueOf(card.getId()));
-
         cardViewHolder.card.setOnClickListener(new View.OnClickListener(){
 
             public void onClick(View v){
 
                 Intent intent = new Intent(mainContext,Activity_detail_full.class);
                 intent.putExtra(Activity_detail_full.EXTRA_ID, card.getId());
-                mainContext.startActivity(intent);
+                View sharedView = cardViewHolder.title;
+                //Pair<View, String> p2 = Pair.create(sharedView, "lyrics");
+                Pair<View, String> p3 = Pair.create(sharedView, "block");
+                //Pair<View, String> p1 = Pair.create(sharedView, "title");
+                if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    //Shadow
+                    StateListAnimator stateListAnimator = AnimatorInflater
+                            .loadStateListAnimator(mainContext, R.anim.lift_on_touch);
+                    v.setStateListAnimator(stateListAnimator);
+                    //
+                ActivityOptions transitionActivityOptions = ActivityOptions.makeSceneTransitionAnimation((Activity)mainContext,p3);
+                    mainContext.startActivity(intent,transitionActivityOptions.toBundle());}
+                else{mainContext.startActivity(intent);}
 
             }
         });

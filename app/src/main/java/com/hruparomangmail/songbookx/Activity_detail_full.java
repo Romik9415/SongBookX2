@@ -4,6 +4,8 @@ import android.content.Context;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.TextView;
 
 import org.w3c.dom.Text;
@@ -35,6 +37,7 @@ public class Activity_detail_full extends AppCompatActivity {
         title.setText(card.getTitle());
         lyrics.setText(card.getLyrics());
         author.setText(card.getAuthor());
-        Log.v("text_bug", String.valueOf(card.getAuthor()));
+
+
     }
 }

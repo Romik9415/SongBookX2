@@ -1,5 +1,7 @@
 package com.hruparomangmail.songbookx;
 
+import android.animation.StateListAnimator;
+
 /**
  *Created by Roman Khrupa on 12.03.2016.
  * All card info
@@ -9,6 +11,7 @@ public class Card {
     private String title;
     private String lyrics;
     private String author;
+
 
     public enum Category{
         first,

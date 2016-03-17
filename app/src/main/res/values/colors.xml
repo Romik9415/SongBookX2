@@ -6,7 +6,7 @@
     <color name="greenDarken">#00695C</color>
     <color name="darkPrimary">#313C46</color>
     <color name="darkAccent">#2A333C</color>
-    <color name="whiteL">#FAFAFA</color>
+    <color name="whiteL">#E7E7E7</color>
 
     <color name="black_overlay">#66000000</color>
 </resources>

@@ -97,7 +97,7 @@ public class SongsBeta extends MainActivity{
                 "\n" +
                 "[Chorus x2]","IMAGE DRAGONS",Card.Category.first.name()));
 
-        cardRepo.insert(new Card("Gold","In the dark\n" +
+        cardRepo.insert(new Card("Drem","In the dark\n" +
                 "And I’m right on the middle mark\n" +
                 "I’m just in the tier of everything that rides below the surface\n" +
                 "And I watch from a distance seventeen\n" +

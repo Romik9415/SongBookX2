@@ -3,9 +3,13 @@
 
     <group android:checkableBehavior="single">
         <item
+            android:id="@+id/soon"
+            android:icon="@drawable/ic_add_24dp"
+            android:title="Add song lyrics(soon)" />
+        <item
             android:id="@+id/addLyrics"
             android:icon="@drawable/ic_add_24dp"
-            android:title="Add song lyrics" />
+            android:title="Add IMAGE DRAGONS lyrics" />
     </group>
 
     <item android:title="Tools">

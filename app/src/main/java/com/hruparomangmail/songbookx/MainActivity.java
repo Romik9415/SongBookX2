@@ -2,6 +2,7 @@ package com.hruparomangmail.songbookx;
 
 import android.content.ClipData;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.PersistableBundle;
@@ -9,6 +10,7 @@ import android.preference.Preference;
 import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -24,14 +26,18 @@ import android.view.MenuItem;
 import android.widget.AbsListView;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.List;
+import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     CardRepo cardRepo= new CardRepo(this);
     Context context=this;
+    int c=0 ;
+    SwipeRefreshLayout swipeRefreshLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,18 +45,34 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        imageBG();
+
+
+
+        ImageView img = (ImageView) findViewById(R.id.BG);
+        img.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                c=c+1;
+            }
+        });
+
+
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                if(c>3){
+                    TextView text= (TextView)findViewById(R.id.empty_text);
+                    text.setText(""+(10-c));
+                if(c>9){Snackbar.make(view, "You go yo heaven without queue ^-^", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();c=0;}
+                if(cardRepo.getCardList().size()>0){
                 Intent intent = new Intent(context, Activity_detail_full.class);
                 intent.putExtra(Activity_detail_full.EXTRA_ID, cardRepo.getRandomQuote().getId());
-                startActivity(intent);
-
-            }
+                            startActivity(intent);}
+            }}
         });
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -61,7 +83,20 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        swipeRefreshLayout = (SwipeRefreshLayout)findViewById(R.id.swipeRefreshLayout);
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                updateRecycler();
+                if(swipeRefreshLayout.isRefreshing()){
+                    swipeRefreshLayout.setRefreshing(false);
+                }
+            }
 
+        });
+        swipeRefreshLayout.setColorSchemeColors(
+                getResources().getColor(R.color.darkPrimary)
+        );
         updateRecycler();
     }
 
@@ -129,6 +164,19 @@ public class MainActivity extends AppCompatActivity
         llm.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(llm);
         recyclerView.setAdapter(cardAdapter);
+        if(swipeRefreshLayout.isRefreshing()){
+            swipeRefreshLayout.setRefreshing(false);
+        }
+        imageBG();
     }
 
+    public void imageBG(){
+        if(cardRepo.getCardList().size()>0){
+            findViewById(R.id.BG).setVisibility(View.INVISIBLE);
+        findViewById(R.id.empty_text).setVisibility(View.INVISIBLE);
+            findViewById(R.id.main_bg).setVisibility(View.VISIBLE);}
+        else{findViewById(R.id.BG).setVisibility(View.VISIBLE);
+            findViewById(R.id.empty_text).setVisibility(View.VISIBLE);
+            findViewById(R.id.main_bg).setVisibility(View.INVISIBLE);}
+    }
 }

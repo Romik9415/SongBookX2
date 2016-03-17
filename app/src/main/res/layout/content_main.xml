@@ -18,6 +18,8 @@
                 android:layout_height="160dp"
                 android:scaleType="centerCrop"
                 android:src="@drawable/image_background"
+                android:visibility="visible"
+                android:id="@+id/main_bg"
                 tools:ignore="ContentDescription" />
 
             <android.support.v7.widget.RecyclerView
@@ -28,5 +30,21 @@
                 android:clipToPadding="false"
                 android:id="@+id/itemL"
                 android:orientation="vertical" />
+            <ImageView
+                android:layout_width="match_parent"
+                android:foregroundGravity="center|top"
+                android:layout_height="150dp"
+                android:id="@+id/BG"
+                android:contentDescription="@string/app_name"
+                android:layout_marginTop="100dp"
+                android:src="@drawable/empty_img"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="30sp"
+                android:layout_below="@+id/BG"
+                android:id="@+id/empty_text"
+                android:gravity="center"
+                android:text="Oh no, here is empty"/>
         </RelativeLayout>
 </android.support.v4.widget.SwipeRefreshLayout>
