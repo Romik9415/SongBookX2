@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -11,6 +12,7 @@
     app:cardPreventCornerOverlap="false"
     app:cardUseCompatPadding="true"
     android:id="@+id/card_view">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:orientation="vertical"
@@ -31,16 +33,16 @@
             android:paddingLeft="16dp"
             android:paddingRight="16dp"
             android:paddingTop="16dp"
-            android:text=""/>
+            android:text="Title"/>
         <TextView
             android:layout_width="match_parent"
-            android:layout_height="98dp"
+            android:layout_height="wrap_content"
             android:id="@+id/card_lyrics"
             android:paddingTop="16dp"
             android:paddingLeft="16dp"
             android:paddingRight="16dp"
             android:maxLines="4"
-            android:text=""/>
+            android:text="Lyrics"/>
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -51,7 +53,6 @@
             android:textSize="12sp"
             android:id="@+id/card_author"
             android:text="Author name"/>
-
     </LinearLayout>
 
 </android.support.v7.widget.CardView>

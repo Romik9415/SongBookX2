@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:id="@+id/swipeRefreshLayout"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="com.hruparomangmail.songbookx.MainActivity"
+    tools:context="com.hruparomangmail.songbookx.activities.MainActivity"
     tools:showIn="@layout/app_bar_main">
 
         <RelativeLayout

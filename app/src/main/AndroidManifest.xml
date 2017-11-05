@@ -2,14 +2,19 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.hruparomangmail.songbookx">
 
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <!--Main Activity-->
         <activity
-            android:name=".MainActivity"
+            android:name=".activities.MainActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
@@ -18,19 +23,34 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-<!--        <activity
-            android:name="com.name.SongBookX.FullscreenActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:label="@string/title_activity_fullscreen"
-            android:parentActivityName=".MainActivity"
-            android:theme="@style/FullscreenTheme">
+        <activity
+            android:name=".activities.Activity_detail_full"
+            android:parentActivityName=".activities.MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.hruparomangmail.songbookx.MainActivity" />
-        </activity>-->
+                android:value="com.hruparomangmail.songbookx.activities.MainActivity" />
+        </activity>
+        <!--QRScaner Activity-->
+        <activity android:name=".QRScaner">
+        </activity>
+
+        <!--About Activity-->
         <activity
-            android:name=".Activity_detail_full"
-            android:parentActivityName=".MainActivity">
+            android:name=".activities.AboutActivity"
+            android:parentActivityName=".activities.MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.hruparomangmail.songbookx.activities.MainActivity" />
+        </activity>
+
+        <!--Settings Activity-->
+        <activity
+            android:name=".activities.SettingsActivity"
+            android:label="@string/title_activity_settings"
+            android:parentActivityName=".activities.MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.hruparomangmail.songbookx.activities.MainActivity" />
         </activity>
     </application>
 

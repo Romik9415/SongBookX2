@@ -1,13 +1,13 @@
 package com.hruparomangmail.songbookx;
 
-import android.util.Log;
+import com.hruparomangmail.songbookx.activities.MainActivity;
 
 /**
  *
  * Created by Roman Khrupa on 14.03.2016.
  * Add songs here.
  */
-public class SongsBeta extends MainActivity{
+public class SongsBeta extends MainActivity {
     public static void inSong(CardRepo cardRepo){
      cardRepo.insert(new Card("Radioactive", "I'm waking up to ash and dust\n" +
              "I wipe my brow and I sweat my rust\n" +

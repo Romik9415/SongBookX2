@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/action_qr_code_scaner"
+        android:orderInCategory="1"
+        android:icon="@drawable/ic_qr_code_generator"
+        android:title="@string/action_qr_code_generator"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/action_share"
+        android:orderInCategory="1"
+        android:title="@string/action_share"
+        android:icon="@drawable/ic_rss_feed_black_24dp"
+        app:showAsAction="ifRoom" />
+
+</menu>

@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.hruparomangmail.songbookx.Activity_detail_full">
+    tools:context="com.hruparomangmail.songbookx.activities.Activity_detail_full">
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
