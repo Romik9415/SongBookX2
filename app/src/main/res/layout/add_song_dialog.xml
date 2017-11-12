@@ -31,4 +31,9 @@
         android:layout_height="wrap_content"
         android:hint="Author"
         android:id="@+id/add_author_song"/>
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Number of new Songs"
+        android:id="@+id/times"/>
 </LinearLayout>

@@ -5,7 +5,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
@@ -25,13 +24,13 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
-import android.widget.ScrollView;
 import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.hruparomangmail.songbookx.BuildConfig;
 import com.hruparomangmail.songbookx.Card;
@@ -39,9 +38,13 @@ import com.hruparomangmail.songbookx.CardAdapter;
 import com.hruparomangmail.songbookx.CardRepo;
 import com.hruparomangmail.songbookx.QRScaner;
 import com.hruparomangmail.songbookx.R;
+import com.hruparomangmail.songbookx.Song;
 import com.hruparomangmail.songbookx.SongsBeta;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity
@@ -53,7 +56,7 @@ public class MainActivity extends AppCompatActivity
     int status=0;
     public Integer current_card_id;
     SwipeRefreshLayout swipeRefreshLayout;
-    //ToDo Update notification and dinamic link to app
+    FirebaseDatabase database;
     //ToDO add songs
 
     @Override
@@ -64,8 +67,7 @@ public class MainActivity extends AppCompatActivity
         setSupportActionBar(toolbar);
         imageBG();
         status=0;
-
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
+       database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference("groups/"+"1"+"/currentSong");
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
@@ -228,14 +230,31 @@ public class MainActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.addLyrics) {
-           SongsBeta.inSong(cardRepo);
-            updateRecycler();}
+        if (id == R.id.download_action) {
+           //TODo add selector of group
+            //TODO check internet connection
+            database.getReference("songs").child("-KyBmTVa-CVSlwwHTeSl").addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    Log.e("Count " ,""+dataSnapshot.getChildrenCount());
+                    collectSongs((Map<String,Object>) dataSnapshot.getValue());
+                    updateRecycler();
+                }
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
 
+                }
+            });
+            updateRecycler();
+        }
+        if (id == R.id.addLyrics) {
+            SongsBeta.inSong(cardRepo);
+            updateRecycler();
+        }
         if (id == R.id.delete_all) {
             cardRepo.deleteAll();
             updateRecycler();
-        } /*else if (id == R.id.nav_send) {}*/
+        }
         if (id == R.id.soon){
            // View addSongViewDialog = findViewById(R.id.)
             View view = View.inflate(this, R.layout.add_song_dialog, null);
@@ -248,6 +267,12 @@ public class MainActivity extends AppCompatActivity
                     }).setPositiveButton(R.string.upload_song, new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
+                    FirebaseDatabase database = FirebaseDatabase.getInstance();
+                    DatabaseReference newSongsRef = database.getReference("songs");//TODO create groups selector
+                    String groupId = "-KyBmTVa-CVSlwwHTeSl";
+                    String id = newSongsRef.child(groupId).push().getKey();
+                    Song song = new Song("q","q","s",0);
+                    newSongsRef.child(groupId).child(id).setValue(song);
                     Toast.makeText(context, "Uploaded", Toast.LENGTH_SHORT).show();
                 }
             });
@@ -261,6 +286,25 @@ public class MainActivity extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
+    private void collectSongs(Map<String, Object> value) {
+        //List<Song> phoneNumbers = new ArrayList<>();
+        //iterate through each user, ignoring their UID
+        for (Map.Entry<String, Object> entry : value.entrySet()){
+            //Get user map
+            Map songs = (Map) entry.getValue();
+            //Get phone field and append to list
+            String title= songs.get("title").toString();
+            String lyrics = songs.get("lyrics").toString();
+            String author = songs.get("author").toString();
+//            int vladas = Integer.getInteger(songs.get("vladas").toString()); //TODO add vladas
+            cardRepo.insert(new Card(title,lyrics,author,Card.Category.first.name()));
+
+        }
+
+       // System.out.println(phoneNumbers.toString());
+    }
+
     public void updateRecycler(){
         //Updater function
         List<Card> cards = cardRepo.getCardList();

@@ -193,51 +193,8 @@ public class SongsBeta extends MainActivity {
                 "Ooh, gold, woah\n" +
                 "Ooh, gold, woah) ","IMAGE DRAGONS", Card.Category.first.name()));
 
-        cardRepo.insert(new Card("Smoke And Mirrors","This is my word\n" +
-                "This is my way\n" +
-                "Show me a sign\n" +
-                "Sweep me away\n" +
-                "\n" +
-                "This is my word,\n" +
-                "Heartbreaker, gatekeeper\n" +
-                "I’m feeling far away, I’m feeling right there\n" +
-                "\n" +
-                "Deep in my heart, deep in my mind\n" +
-                "Take me away, take me away\n" +
-                "This is my word\n" +
-                "Dream maker, life taker\n" +
-                "Open up my mind\n" +
-                "\n" +
-                "[Chorus:]\n" +
-                "All I believe\n" +
-                "is it a dream\n" +
-                "that comes crashing down on me\n" +
-                "All that I hope\n" +
-                "is it just smoke and mirrors\n" +
-                "I want to believe ohh oh oh oh oh oh oh\n" +
-                "But all that I hope\n" +
-                "is it just smoke and mirrors\n" +
-                "\n" +
-                "All that I’ve known\n" +
-                "buildings of stone\n" +
-                "Fall to the ground\n" +
-                "without a sound\n" +
-                "This is my word\n" +
-                "Heart breaker, gatekeeper\n" +
-                "I’m feeling far away, I’m feeling right there\n" +
-                "\n" +
-                "I’m starting to cave\n" +
-                "I’m losing my flame\n" +
-                "I wanted your truth\n" +
-                "but I wanted the pain\n" +
-                "to disappear\n" +
-                "Dream maker, life taker\n" +
-                "Open up my mind\n" +
-                "\n" +
-                "[Chorus]\n" +
-                "\n" +
-                "Believe\n" +
-                "I want to believe…","IMAGE DRAGONS", Card.Category.first.name()));
+        cardRepo.insert(new Card("911",
+                "Вступ і основна частина: Hm Em |(2)\n \n Hm(VII)         \n Ти моя остання любов,\n Em         \n Моя машина, моя машина.\n Hm     \n Ти i я напилися знов,\n Em           \n Моя єдина , смак бензини,  кави...\n \n День i ніч, колихає часa\n А ми з тобою живем по двоє,\n Автомобіль буде у нас,\n Моє ти сонце\n \n Приспів:\n        Hm  D A     Hm\n   Я не один, ти не одна\n   Скільки людей, стільки машин,\n   Ти не одна, я не один\n   Мій телефон 911\n \n Ти i я щаслива сім’я\n Бо ти машина i я машина,\n Може твій, а може твоя,\n Моя єдина налий бензини ... кави\n \n Ніхто не забув сьогодні до нас,\n Заходьте в гості, заходьте в гості,\n Ставити фільм, а може i нас\n Колись покажуть там.\n \n Приспів.\n","Океан Ельзи", Card.Category.first.name()));
 
         cardRepo.insert(new Card("I'm So Sorry","About time for anyone telling you off for all your deeds\n" +
                 "No sign the roaring thunder stopped in cold to read\n" +
