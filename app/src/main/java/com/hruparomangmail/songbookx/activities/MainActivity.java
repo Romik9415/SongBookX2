@@ -23,26 +23,26 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RadioButton;
 import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.hruparomangmail.songbookx.BuildConfig;
 import com.hruparomangmail.songbookx.Card;
 import com.hruparomangmail.songbookx.CardAdapter;
 import com.hruparomangmail.songbookx.CardRepo;
+import com.hruparomangmail.songbookx.Group;
 import com.hruparomangmail.songbookx.QRScaner;
 import com.hruparomangmail.songbookx.R;
 import com.hruparomangmail.songbookx.Song;
-import com.hruparomangmail.songbookx.SongsBeta;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -54,10 +54,13 @@ public class MainActivity extends AppCompatActivity
     Context context=this;
     int c=0 ;
     int status=0;
-    public Integer current_card_id;
+    public String current_card_id;
     SwipeRefreshLayout swipeRefreshLayout;
     FirebaseDatabase database;
     //ToDO add songs
+    //TODO add Vladas
+    //TODO change font size
+    //TODO add autoscrolling
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,8 +75,8 @@ public class MainActivity extends AppCompatActivity
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                if(status!=0&& current_card_id!=dataSnapshot.getValue(Integer.class)) {
-                    current_card_id = dataSnapshot.getValue(Integer.class);
+                if(status!=0&& current_card_id!=dataSnapshot.getValue(String.class)) {
+                    current_card_id = dataSnapshot.getValue(String.class);
                     Intent intent = new Intent(context, Activity_detail_full.class);
                     intent.putExtra(Activity_detail_full.EXTRA_ID, current_card_id);
                     startActivity(intent);
@@ -233,7 +236,7 @@ public class MainActivity extends AppCompatActivity
         if (id == R.id.download_action) {
            //TODo add selector of group
             //TODO check internet connection
-            database.getReference("songs").child("-KyBmTVa-CVSlwwHTeSl").addListenerForSingleValueEvent(new ValueEventListener() {
+            database.getReference("songs").child("-KyBmTVa-CVSlwwHTeSl").orderByValue().addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     Log.e("Count " ,""+dataSnapshot.getChildrenCount());
@@ -247,15 +250,33 @@ public class MainActivity extends AppCompatActivity
             });
             updateRecycler();
         }
-        if (id == R.id.addLyrics) {
-            SongsBeta.inSong(cardRepo);
-            updateRecycler();
+        if (id == R.id.add_group_action) {
+            final View view = View.inflate(this, R.layout.add_group_dialog, null);
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setView(view)
+                    .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+
+                        }
+                    }).setPositiveButton(R.string.add_string, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            FirebaseDatabase database = FirebaseDatabase.getInstance();
+                            DatabaseReference newGroupRef = database.getReference("groups");//TODO create groups selector
+                            String id = newGroupRef.push().getKey();
+                            EditText name_edit = view.findViewById(R.id.group_name);
+                            String name = name_edit.getText().toString();
+                            boolean groupIsPublic = ((RadioButton)view.findViewById(R.id.radio_public)).isChecked();
+                            Group group = new Group(name,id,"oh_i_am_current_song_id",groupIsPublic);
+                            newGroupRef.child(id).setValue(group);
+                        }
+                    }).show();
         }
         if (id == R.id.delete_all) {
             cardRepo.deleteAll();
             updateRecycler();
         }
-        if (id == R.id.soon){
+        if (id == R.id.add_lyrics_action){
            // View addSongViewDialog = findViewById(R.id.)
             View view = View.inflate(this, R.layout.add_song_dialog, null);
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -271,7 +292,7 @@ public class MainActivity extends AppCompatActivity
                     DatabaseReference newSongsRef = database.getReference("songs");//TODO create groups selector
                     String groupId = "-KyBmTVa-CVSlwwHTeSl";
                     String id = newSongsRef.child(groupId).push().getKey();
-                    Song song = new Song("q","q","s",0);
+                    Song song = new Song("dad","q","q","s",0);
                     newSongsRef.child(groupId).child(id).setValue(song);
                     Toast.makeText(context, "Uploaded", Toast.LENGTH_SHORT).show();
                 }
@@ -298,7 +319,7 @@ public class MainActivity extends AppCompatActivity
             String lyrics = songs.get("lyrics").toString();
             String author = songs.get("author").toString();
 //            int vladas = Integer.getInteger(songs.get("vladas").toString()); //TODO add vladas
-            cardRepo.insert(new Card(title,lyrics,author,Card.Category.first.name()));
+            cardRepo.insert(new Card(entry.getKey(),title,lyrics,author,Card.Category.first.name()));
 
         }
 

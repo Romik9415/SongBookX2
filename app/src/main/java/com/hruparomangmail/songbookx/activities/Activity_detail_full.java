@@ -27,7 +27,7 @@ public class Activity_detail_full extends AppCompatActivity {
 //Full card info.
     public  final static String EXTRA_ID="ID";
     private Card card;
-    private int card_id = 0;
+    private String card_id = "";
 
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     String groupName = "1";
@@ -48,7 +48,7 @@ public class Activity_detail_full extends AppCompatActivity {
         lyrics = (TextView) findViewById(R.id.lyrics);
         author = (TextView) findViewById(R.id.author);
 
-        card_id = getIntent().getIntExtra(EXTRA_ID, 0);
+        card_id = getIntent().getStringExtra(EXTRA_ID);
         card = cardRepo.getCardById(card_id);
         title.setText(card.getTitle());
         lyrics.setText(card.getLyrics());

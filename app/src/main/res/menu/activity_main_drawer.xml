@@ -10,13 +10,13 @@
                 android:icon="@drawable/ic_cloud_download_black_24dp"
                 android:title="Download lyrics"/>
             <item
-                android:id="@+id/soon"
+                android:id="@+id/add_group_action"
+                android:icon="@drawable/group_add_action"
+                android:title="Create new group" />
+            <item
+                android:id="@+id/add_lyrics_action"
                 android:icon="@drawable/ic_add_24dp"
                 android:title="Add song" />
-            <item
-                android:id="@+id/addLyrics"
-                android:icon="@drawable/ic_add_24dp"
-                android:title="Add test lyrics" />
             <item
                 android:id="@+id/delete_all"
                 android:icon="@drawable/ic_delete_24dp"

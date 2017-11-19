@@ -19,17 +19,18 @@ public class CardRepo {
         dbHelper = new DBHelper(context);
     }
 
-    public int insert(Card card){
+    public String insert(Card card){
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         ContentValues values = new ContentValues();
+        values.put(Card.KEY_ID,card.getId());
         values.put(Card.KEY_TITLE,card.getTitle());
         values.put(Card.KEY_LYRICS,card.getLyrics());
         values.put(Card.KEY_AUTHOR,card.getAuthor());
         values.put(Card.KEY_CATEGORY, card.getNameOfCategory());
 
-        long post_id = db.insert(Card.TABLE,null,values);
+        db.insert(Card.TABLE,null,values);
         db.close();
-        return (int) post_id;
+        return card.getId();
     }
 
     public ArrayList<Card> getCardList(){
@@ -41,12 +42,13 @@ public class CardRepo {
         if (cursor.moveToFirst()){
             do {
                 Card card = new Card(
+                        cursor.getString(cursor.getColumnIndex(Card.KEY_ID)),
                         cursor.getString(cursor.getColumnIndex(Card.KEY_TITLE)),
                         cursor.getString(cursor.getColumnIndex(Card.KEY_LYRICS)),
                         cursor.getString(cursor.getColumnIndex(Card.KEY_AUTHOR)),
                         cursor.getString(cursor.getColumnIndex(Card.KEY_CATEGORY))
                 );
-                card.setId(cursor.getInt(cursor.getColumnIndex(Card.KEY_ID)));
+                card.setId(cursor.getString(cursor.getColumnIndex(Card.KEY_ID)));
                 cardList.add(card);
 
             }while (cursor.moveToNext());
@@ -55,14 +57,14 @@ public class CardRepo {
         db.close();
         return cardList;
     }
-    public Card getCardById(int Id){
+    public Card getCardById(String Id){
         SQLiteDatabase db = dbHelper.getReadableDatabase();
-        Card card= new Card("","","",Card.Category.first.name());
+        Card card= new Card("","","","",Card.Category.first.name());
         Cursor cursor = db.rawQuery("select * from "+Card.TABLE+" where "+Card.KEY_ID+"='"+String.valueOf(Id)+"'", null);
 
         if (cursor.moveToFirst()) {
             do {
-                card.setId(cursor.getInt(cursor.getColumnIndex(Card.KEY_ID)));
+                card.setId(cursor.getString(cursor.getColumnIndex(Card.KEY_ID)));
                 card.setTitle(cursor.getString(cursor.getColumnIndex(Card.KEY_TITLE)));
                 card.setLyrics(cursor.getString(cursor.getColumnIndex(Card.KEY_LYRICS)));
                 card.setAuthor(cursor.getString(cursor.getColumnIndex(Card.KEY_AUTHOR)));
@@ -84,7 +86,7 @@ public class CardRepo {
 
     public Card getRandomQuote(){
         //Generates random card
-        Card card= new Card("","","", Card.Category.first.name());
+        Card card= new Card("","","","", Card.Category.first.name());
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         String selectQuery = "SELECT  * FROM " + Card.TABLE + " ORDER BY RANDOM() LIMIT 1";
         Cursor cursor = db.rawQuery(selectQuery, null);
@@ -94,7 +96,7 @@ public class CardRepo {
                 card.setLyrics(cursor.getString(cursor.getColumnIndex(Card.KEY_LYRICS)));
                 card.setAuthor(cursor.getString(cursor.getColumnIndex(Card.KEY_AUTHOR)));
                 card.setCategory(cursor.getString(cursor.getColumnIndex(Card.KEY_CATEGORY)));
-                card.setId(cursor.getInt(cursor.getColumnIndex(Card.KEY_ID)));
+                card.setId(cursor.getString(cursor.getColumnIndex(Card.KEY_ID)));
             }while (cursor.moveToNext());
         }
                 cursor.close();

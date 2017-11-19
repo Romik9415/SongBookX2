@@ -12,7 +12,7 @@ import android.database.sqlite.SQLiteOpenHelper;
  * SQlite live here .
  */
 public class DBHelper extends SQLiteOpenHelper {
-    private static final int DATABASE_VERSION=2;
+    private static final int DATABASE_VERSION=4;
     private static final String DATABASE_NAME="songBookX.db";
 
     public DBHelper(Context context) {
@@ -24,7 +24,7 @@ public class DBHelper extends SQLiteOpenHelper {
         //All necessary tables you like to create will create here
         String CREATE_TABLE_EXPENSE ="CREATE TABLE "
                 + Card.TABLE  + " ("
-                + Card.KEY_ID  + " INTEGER PRIMARY KEY AUTOINCREMENT ,"
+                + Card.KEY_ID  + " TEXT PRIMARY KEY,"
                 + Card.KEY_TITLE + " TEXT, "
                 + Card.KEY_LYRICS + " TEXT,"
                 + Card.KEY_AUTHOR + " TEXT, "

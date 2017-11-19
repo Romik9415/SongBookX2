@@ -41,13 +41,14 @@
             android:paddingTop="16dp"
             android:paddingLeft="16dp"
             android:paddingRight="16dp"
+            android:layout_marginBottom="8dp"
             android:maxLines="4"
             android:text="Lyrics"/>
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="right"
-            android:paddingRight="8dp"
+            android:paddingRight="16dp"
             android:paddingLeft="8dp"
             android:paddingBottom="4dp"
             android:textSize="12sp"

@@ -7,7 +7,7 @@ import android.animation.StateListAnimator;
  * All card info
  */
 public class Card {
-    private int id;
+    private String id;
     private String title;
     private String lyrics;
     private String author;
@@ -28,18 +28,19 @@ public class Card {
     public static final String KEY_CATEGORY="category";
 
     //Card info
-    public Card(String title,String lyrics,String author,String category){
+    public Card(String id,String title,String lyrics,String author,String category){
+        this.id = id;
         this.title=title;
         this.lyrics=lyrics;
         this.author=author;
         this.category=Category.valueOf(category);
     }
     //id
-    public void setId(int id){
+    public void setId(String id){
         this.id = id;
     }
 
-    public int getId(){
+    public String getId(){
         return this.id;
     }
 

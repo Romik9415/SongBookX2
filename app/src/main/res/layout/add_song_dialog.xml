@@ -1,10 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="8dp"
-    android:orientation="vertical">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:padding="16dp">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -12,28 +16,40 @@
         android:textSize="22sp"
         android:textStyle="bold"
         android:textColor="#565656"
-        android:paddingLeft="16dp"
-        android:paddingRight="16dp"
-        android:paddingTop="16dp"
-        android:paddingBottom="6dp" />
-    <EditText
+        android:layout_marginBottom="8dp"/>
+
+    <android.support.design.widget.TextInputLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Title"
-        android:id="@+id/add_title_song"/>
-    <EditText
+        android:layout_height="wrap_content">
+        <EditText
+            android:hint="Name"
+            android:id="@+id/add_title_song"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"/>
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Lyrics"
-        android:id="@+id/add_lyrics_song"/>
-    <EditText
+        android:layout_height="wrap_content">
+        <EditText
+            android:hint="Lyrics"
+            android:id="@+id/add_lyrics_song"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"/>
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
+
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Author"
-        android:id="@+id/add_author_song"/>
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Number of new Songs"
-        android:id="@+id/times"/>
-</LinearLayout>
+        android:layout_height="wrap_content">
+        <EditText
+            android:hint="Author"
+            android:id="@+id/add_author_song"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"/>
+    </android.support.design.widget.TextInputLayout>
+    </LinearLayout>
+</ScrollView>
