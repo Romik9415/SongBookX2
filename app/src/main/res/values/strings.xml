@@ -46,6 +46,9 @@
     <string name="add_string">Add</string>
     <string name="public_string">public</string>
     <string name="private_string">private</string>
+    <string name="action_sort">Sort by</string>
+    <string name="sort_by_dialog_text">Sort by</string>
+    <string name="sort_string">sort</string>
     <string-array name="pref_example_list_titles">
         <item>Always</item>
         <item>When possible</item>

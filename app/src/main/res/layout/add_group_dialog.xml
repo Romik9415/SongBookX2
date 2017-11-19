@@ -14,12 +14,17 @@
         android:textColor="#565656"
         android:paddingTop="8dp"
         android:layout_marginBottom="16dp" />
-    <com.rengwuxian.materialedittext.MaterialEditText
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    <EditText
+        android:hint="Name"
+        android:id="@+id/group_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:id="@+id/group_name"
-    android:hint="Group name"/>
+        android:layout_marginBottom="8dp"/>
+    </android.support.design.widget.TextInputLayout>
+
     <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"

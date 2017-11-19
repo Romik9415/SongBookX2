@@ -44,7 +44,7 @@ public class QRScaner extends Activity implements ZXingScannerView.ResultHandler
             String resultType = result.split("/")[0];
             if(resultType.equals("song")) {
                 try {
-                    int songId = Integer.parseInt(result.split("/")[1]);
+                    String songId = (result.split("/")[1]);
                     Intent intent = new Intent(this, Activity_detail_full.class);
                     intent.putExtra(Activity_detail_full.EXTRA_ID, songId);
                     finish();

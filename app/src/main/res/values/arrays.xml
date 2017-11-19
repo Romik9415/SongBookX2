@@ -7,5 +7,17 @@
     <string-array name="groupsValues">
         <item>-KyBmTVa-CVSlwwHTeSl</item>
     </string-array>
+    <string-array name="sort_by">
+        <item>Name</item>
+        <item>Name in reverse order </item>
+        <item>Author</item>
+        <item>Author in reverse order</item>
+    </string-array>
+    <string-array name="sort_values">
+        <item>name</item>
+        <item>name_reverse</item>
+        <item>author</item>
+        <item>author_reverse</item>
+    </string-array>
 
 </resources>

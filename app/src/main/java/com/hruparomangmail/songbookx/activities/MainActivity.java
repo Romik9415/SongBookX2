@@ -3,9 +3,11 @@ package com.hruparomangmail.songbookx.activities;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
@@ -23,11 +25,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.CheckBox;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioButton;
+import android.widget.Spinner;
 import android.widget.Toast;
+import java.util.Collections;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -43,6 +47,7 @@ import com.hruparomangmail.songbookx.QRScaner;
 import com.hruparomangmail.songbookx.R;
 import com.hruparomangmail.songbookx.Song;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -57,10 +62,14 @@ public class MainActivity extends AppCompatActivity
     public String current_card_id;
     SwipeRefreshLayout swipeRefreshLayout;
     FirebaseDatabase database;
-    //ToDO add songs
+    SharedPreferences prefs;
+    String sortingType;
+    //ToDO add songs by group
     //TODO add Vladas
     //TODO change font size
     //TODO add autoscrolling
+    //TODO add favorite songs
+    //TODO fix double opening
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,6 +79,7 @@ public class MainActivity extends AppCompatActivity
         setSupportActionBar(toolbar);
         imageBG();
         status=0;
+        prefs = PreferenceManager.getDefaultSharedPreferences(this);
        database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference("groups/"+"1"+"/currentSong");
         myRef.addValueEventListener(new ValueEventListener() {
@@ -200,6 +210,28 @@ public class MainActivity extends AppCompatActivity
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
 
+        if (id == R.id.action_sort){
+            final View view = View.inflate(this, R.layout.sort_dialog, null);
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            Spinner spinner = (Spinner) view.findViewById(R.id.sort_by_spinner);
+            ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(context,
+                    R.array.sort_by, android.R.layout.simple_spinner_item);
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            spinner.setAdapter(adapter);
+
+            builder.setView(view)
+                    .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+
+                        }
+                    }).setPositiveButton(R.string.sort_string, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                }
+                //TODo finish sorting
+            }).show();
+            return true;
+        }
         if (id == R.id.action_settings) {
             Intent intent = new Intent(MainActivity.this, SettingsActivity.class);
             startActivity(intent);
@@ -329,6 +361,26 @@ public class MainActivity extends AppCompatActivity
     public void updateRecycler(){
         //Updater function
         List<Card> cards = cardRepo.getCardList();
+        Collections.sort(cards,new Comparator<Card>() {
+            @Override
+            public int compare(Card o1, Card o2) {
+                sortingType = prefs.getString("default_sort", "name");
+                switch (sortingType){
+                    case "name_reverse":{
+                        return -o1.getTitle().compareTo(o2.getTitle());
+                    }
+                    case "author":{
+                        return o1.getAuthor().compareTo(o2.getAuthor());
+                    }
+                    case "author_reverse":{
+                        return -o1.getAuthor().compareTo(o2.getAuthor());
+                    }
+                    default:
+                        return o1.getTitle().compareTo(o2.getTitle());
+                }
+
+            }
+                });
         CardAdapter cardAdapter = new CardAdapter(cards,this);
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.itemL);
         recyclerView.setHasFixedSize(true);
