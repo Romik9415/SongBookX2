@@ -20,7 +20,7 @@ public class AboutActivity extends AppCompatActivity {
         visit_website_layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://apps-8aba9.firebaseapp.com/"));
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.facebook.com/maksym.kyrpychnyk"));
                 startActivity(browserIntent);
             }
         });

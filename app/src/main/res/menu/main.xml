@@ -17,6 +17,12 @@
         android:title="@string/action_sort"
         app:showAsAction="never" />
     <item
+        android:id="@+id/action_search"
+        android:orderInCategory="2"
+        android:icon="@drawable/ic_search_black_24dp"
+        android:title="@string/action_search"
+        app:showAsAction="ifRoom" />
+    <item
         android:id="@+id/action_qr_code_scaner"
         android:orderInCategory="1"
         android:icon="@drawable/ic_crop_free_black_24dp"

@@ -19,9 +19,9 @@
     <string name="wrong_qr_code_toast">Wrong QR code</string>
     <string name="about_version">Version</string>
     <string name="about_version_number">0.1</string>
-    <string name="visit_website">Visit website</string>
+    <string name="visit_website">Visit my fb page</string>
     <string name="about_mail">Whrite to mail</string>
-    <string name="website_url">https://apps-8aba9.firebaseapp.com</string>
+    <string name="website_url">https://www.facebook.com/maksym.kyrpychnyk</string>
     <string name="upload_song">Upload</string>
     <string name="add_lyrics_dialog_text">Add your song</string>
     <string name="title_activity_settings">Settings</string>
@@ -49,6 +49,9 @@
     <string name="action_sort">Sort by</string>
     <string name="sort_by_dialog_text">Sort by</string>
     <string name="sort_string">sort</string>
+    <string name="main_group_text">Main group :</string>
+    <string name="get_group_qr_code">Get group QR code</string>
+    <string name="action_search">Search</string>
     <string-array name="pref_example_list_titles">
         <item>Always</item>
         <item>When possible</item>

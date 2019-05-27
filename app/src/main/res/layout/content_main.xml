@@ -13,6 +13,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
+
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="160dp"
@@ -30,6 +31,29 @@
                 android:clipToPadding="false"
                 android:id="@+id/itemL"
                 android:orientation="vertical" />
+
+            <android.support.v7.widget.CardView
+                app:layout_scrollFlags="scroll|enterAlways"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="invisible"
+                android:layout_marginTop="16dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:id="@+id/cardS"
+                app:cardBackgroundColor="@android:color/white"
+                app:cardElevation="5dp">
+
+            <android.support.v7.widget.SearchView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/searchViewQuery"
+                android:background="@android:color/white"
+                app:queryHint="Search event"
+                android:textColor="@color/black"
+                app:iconifiedByDefault="false"
+                app:closeIcon="@drawable/ic_close_black_24dp" />
+            </android.support.v7.widget.CardView>
             <ImageView
                 android:layout_width="match_parent"
                 android:foregroundGravity="center|top"

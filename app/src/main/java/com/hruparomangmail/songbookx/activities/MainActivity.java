@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -26,10 +27,12 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 import java.util.Collections;
 
@@ -38,6 +41,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.zxing.WriterException;
 import com.hruparomangmail.songbookx.BuildConfig;
 import com.hruparomangmail.songbookx.Card;
 import com.hruparomangmail.songbookx.CardAdapter;
@@ -52,6 +56,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
+import androidmads.library.qrgenearator.QRGContents;
+import androidmads.library.qrgenearator.QRGEncoder;
+
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     CardRepo cardRepo= new CardRepo(this);
@@ -64,12 +71,14 @@ public class MainActivity extends AppCompatActivity
     FirebaseDatabase database;
     SharedPreferences prefs;
     String sortingType;
+    String mainGroup;
     //ToDO add songs by group
     //TODO add Vladas
     //TODO change font size
     //TODO add autoscrolling
     //TODO add favorite songs
     //TODO fix double opening
+    //TODO add chords
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,8 +89,10 @@ public class MainActivity extends AppCompatActivity
         imageBG();
         status=0;
         prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        sortingType = prefs.getString("default_sort", "name");
        database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference("groups/"+"1"+"/currentSong");
+        mainGroup= prefs.getString("group_preference", "-KyBmTVa-CVSlwwHTeSl");
+        DatabaseReference myRef = database.getReference("groups/"+mainGroup+"/currentSong");
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -142,8 +153,6 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
-
-
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -168,8 +177,44 @@ public class MainActivity extends AppCompatActivity
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
+        //Navigation buttons and text
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        View hView =  navigationView.getHeaderView(0);
+        TextView textViewMainGroup = (TextView)hView.findViewById(R.id.nav_bar_group_name);
+        textViewMainGroup.setText(mainGroup);
+        Button getGroupQrCode = hView.findViewById(R.id.nav_view_get_qr_code_btn);
+        getGroupQrCode.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Show main group Qr code
+                View view = View.inflate(context, R.layout.qr_generator_view, null);
+                ImageView qr_code_image_view = view.findViewById(R.id.qr_code_image_view);
+
+                //----------QR code generator--------//
+                QRGEncoder qrgEncoder = new QRGEncoder(
+                        "groups/"+mainGroup, null,
+                        QRGContents.Type.TEXT,
+                        2000);
+                try {
+                    Bitmap bitmap = qrgEncoder.encodeAsBitmap();
+                    qr_code_image_view.setImageBitmap(bitmap);
+                } catch (WriterException e) {
+                    e.printStackTrace();
+                }
+                AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                builder.setView(view)
+                        .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+
+                            }
+                        });
+                builder.create().show();
+            }
+
+        });
+
         navigationView.setNavigationItemSelectedListener(this);
+
         swipeRefreshLayout = (SwipeRefreshLayout)findViewById(R.id.swipeRefreshLayout);
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -213,8 +258,8 @@ public class MainActivity extends AppCompatActivity
         if (id == R.id.action_sort){
             final View view = View.inflate(this, R.layout.sort_dialog, null);
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            Spinner spinner = (Spinner) view.findViewById(R.id.sort_by_spinner);
-            ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(context,
+            final Spinner spinner = (Spinner) view.findViewById(R.id.sort_by_spinner);
+            final ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(context,
                     R.array.sort_by, android.R.layout.simple_spinner_item);
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             spinner.setAdapter(adapter);
@@ -227,8 +272,9 @@ public class MainActivity extends AppCompatActivity
                     }).setPositiveButton(R.string.sort_string, new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
+                    sortingType = getPregStringFromSortType(spinner.getSelectedItem().toString());
+                    updateRecycler();
                 }
-                //TODo finish sorting
             }).show();
             return true;
         }
@@ -354,8 +400,16 @@ public class MainActivity extends AppCompatActivity
             cardRepo.insert(new Card(entry.getKey(),title,lyrics,author,Card.Category.first.name()));
 
         }
+    }
 
-       // System.out.println(phoneNumbers.toString());
+    String getPregStringFromSortType(String s){
+        switch (s){
+            case "Name": return "name";
+            case "Name in reverse order":return "name_reverse";
+            case "Author": return "author";
+            case "Author in reverse order":return "author_reverse";
+            default:return "name";
+        }
     }
 
     public void updateRecycler(){
@@ -364,7 +418,6 @@ public class MainActivity extends AppCompatActivity
         Collections.sort(cards,new Comparator<Card>() {
             @Override
             public int compare(Card o1, Card o2) {
-                sortingType = prefs.getString("default_sort", "name");
                 switch (sortingType){
                     case "name_reverse":{
                         return -o1.getTitle().compareTo(o2.getTitle());

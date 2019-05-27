@@ -1,7 +1,9 @@
 package com.hruparomangmail.songbookx.activities;
 
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -30,8 +32,10 @@ public class Activity_detail_full extends AppCompatActivity {
     private String card_id = "";
 
     FirebaseDatabase database = FirebaseDatabase.getInstance();
-    String groupName = "1";
-    DatabaseReference groupRef = database.getReference("groups/"+groupName+"/currentSong");
+    String mainGroup;
+
+    DatabaseReference groupRef;
+    SharedPreferences prefs;
 
     TextView title;
     TextView lyrics;
@@ -43,6 +47,10 @@ public class Activity_detail_full extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail_full);
+
+        prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        mainGroup= prefs.getString("group_preference", "-KyBmTVa-CVSlwwHTeSl");
+        groupRef = database.getReference("groups/"+mainGroup+"/currentSong");
 
         title = (TextView) findViewById(R.id.title);
         lyrics = (TextView) findViewById(R.id.lyrics);

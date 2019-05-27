@@ -13,18 +13,18 @@
         android:title="General"
         android:key="general_category">
         <ListPreference
-            android:key="group_preference"
-            android:title="Main group"
-            android:defaultValue="-KyBmTVa-CVSlwwHTeSl"
-            android:summary="%s"
-            android:entries="@array/groups"
-            android:entryValues="@array/groupsValues"/>
-        <ListPreference
             android:key="default_sort"
             android:title="Default sort by"
             android:defaultValue="name"
             android:summary="%s"
             android:entries="@array/sort_by"
             android:entryValues="@array/sort_values"/>
+        <ListPreference
+            android:defaultValue="-KyBmTVa-CVSlwwHTeSl"
+            android:entries="@array/groups"
+            android:entryValues="@array/groupsValues"
+            android:key="group_preference"
+            android:summary="%s"
+            android:title="Main group" />
     </PreferenceCategory>
 </PreferenceScreen>

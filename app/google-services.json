@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "556538604824",
+    "firebase_url": "https://songbookx2.firebaseio.com",
+    "project_id": "songbookx2",
+    "storage_bucket": "songbookx2.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:556538604824:android:3094e315dafc0ea5",
+        "android_client_info": {
+          "package_name": "com.hruparomangmail.songbookx"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "556538604824-40gp60aktdj0bk9h9m8ltf8kol9po0g1.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.hruparomangmail.songbookx",
+            "certificate_hash": "c7e393091e9e5f3a9022d925d74171377fc8d836"
+          }
+        },
+        {
+          "client_id": "556538604824-fd3eh611m3cddv8fqe3oa5v4b8ce4bau.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDhNesj1YJ-XL24btrWzeNThxiBO-89WJI"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "556538604824-fd3eh611m3cddv8fqe3oa5v4b8ce4bau.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
